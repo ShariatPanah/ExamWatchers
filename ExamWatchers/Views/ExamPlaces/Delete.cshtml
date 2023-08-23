@@ -1,0 +1,56 @@
+﻿@model Models.ExamPlace
+
+@{
+    ViewBag.Title = "حذف حوزه امتحانی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>حذف حوزه امتحانی</h2>
+
+<h3>آیا از حذف این حوزه امتحانی اطمینان دارید؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.College.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.College.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd class="numeric">
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

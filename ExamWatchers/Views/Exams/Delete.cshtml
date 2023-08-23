@@ -1,0 +1,80 @@
+﻿@model Models.Exam
+
+@{
+    ViewBag.Title = "حذف امتحان";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف امتحان</h2>
+
+<h3>آیا از حذف این امتحان اطمینان دارید؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            حوزه
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamPlace.Title)
+        </dd>
+
+        <dt>
+            تاریخ امتحان
+        </dt>
+
+        <dd class="numeric">
+            @(Model.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + Model.ExamEndTime.ToString("HH:mm"))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WatchersCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WatchersCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingCapacity)
+        </dt>
+
+        <dd>
+            @if (Model.RemainingCapacity == 0)
+            {
+                <span class="text-danger">تکمیل شده</span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.RemainingCapacity)
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

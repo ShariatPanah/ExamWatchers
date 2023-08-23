@@ -1,0 +1,90 @@
+﻿@model Models.WatcherExam
+
+@{
+    ViewBag.Title = "ثبت حضور مراقب";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ثبت حضور مراقب</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("CollegeId", "دانشکده", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CollegeId", null, htmlAttributes: new { @class = "form-control", @onchange = "OnChangedCollegeDropDown()" })
+                @Html.ValidationMessage("CollegeId", "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("ExamCode", "امتحان", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ExamCode", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("WatcherCode", "مراقب", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("WatcherCode", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WatcherCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-default col-md-12" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            OnChangedCollegeDropDown();
+        })
+
+        function OnChangedCollegeDropDown() {
+            var collegeId = $('#CollegeId').val();
+            $.ajax({
+                url: '/WatcherExams/GetWatchersAndExams',
+                type: "GET",
+                dataType: "JSON",
+                data: { collegeId: collegeId },
+                success: function (result) {
+                    var exams = result.exams;
+                    var watchers = result.watchers;
+
+                    $("#ExamCode").html(""); // حذف همه آیتم ها قبل از اضافه کردن آیتم جدید
+                    $.each(exams, function (i, exam) {
+                        $("#ExamCode").append(
+                            $('<option></option>').val(exam.Code).html(exam.Title));
+                    });
+
+                    $("#WatcherCode").html(""); // حذف همه آیتم ها قبل از اضافه کردن آیتم جدید
+                    $.each(watchers, function (i, watcher) {
+                        $("#WatcherCode").append(
+                            $('<option></option>').val(watcher.PersonnelCode).html(watcher.Name));
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
+}

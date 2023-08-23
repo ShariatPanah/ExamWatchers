@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Models.User>
+
+@{
+    ViewBag.Title = "کاربران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>کاربران</h2>
+
+<p>
+    @Html.ActionLink("کاربر جدید", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonnelCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Organ)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsConfirmed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonnelCode)
+                </td>
+                <td>
+                    @(item.FirstName + " " + item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Organ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td class="numeric">
+                    @Html.DisplayFor(modelItem => item.RegisterDate)
+                </td>
+                <td>
+                    @{
+                        if (item.IsConfirmed)
+                        {
+                            <span>بله</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">خیر&nbsp;</span>
+                            <span>[ </span>
+                            @Html.ActionLink("تایید اکانت", "ConfirmUser", new { code = item.PersonnelCode })
+                            <span> ]</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.PersonnelCode }) |
+                    @Html.ActionLink("مشخصات", "Details", new { id = item.PersonnelCode }) |
+                    @Html.ActionLink("حذف", "Delete", new { id = item.PersonnelCode })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").DataTable({
+                language: {
+                    search: "جستجو:",
+                    emptyTable: "<span style='color:red;'>داده ای برای نمایش وجود ندارد!</span>",
+                    processing: "درحال واکشی اطلاعات...",
+                    loadingRecords: "درحال واکشی اطلاعات...",
+                    zeroRecords: "موردی یافت نشد!",
+                    lengthMenu: "نمایش &nbsp;_MENU_&nbsp; رکورد",
+                    info: "نمایش رکوردهای _START_ الی _END_ از مجموع _TOTAL_ رکورد",
+                    infoEmpty: "نمایش رکوردهای 0 الی 0 از مجموع 0 رکورد",
+                    infoFiltered: "",
+                    paginate: {
+                        next: "بعدی",
+                        previous: "قبلی"
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model Models.Watcher
+
+@{
+    ViewBag.Title = "حذف مراقب";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>حذف مراقب</h2>
+
+<h3>آیا از حذف این مراقب اطمینان دارید؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.PersonnelCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.PersonnelCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @(Model.User.FirstName + " " + Model.User.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Organ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Organ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WatchHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WatchHours)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

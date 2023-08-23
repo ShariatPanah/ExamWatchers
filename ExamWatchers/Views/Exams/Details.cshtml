@@ -1,0 +1,73 @@
+﻿@model Models.Exam
+
+@{
+    ViewBag.Title = "جزئیات امتحان";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>جزئیات امتحان</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            حوزه
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamPlace.Title)
+        </dd>
+
+        <dt>
+            تاریخ امتحان
+        </dt>
+
+        <dd class="numeric">
+            @(Model.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + Model.ExamEndTime.ToString("HH:mm"))
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WatchersCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WatchersCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RemainingCapacity)
+        </dt>
+
+        <dd>
+            @if (Model.RemainingCapacity == 0)
+            {
+                <span class="text-danger">تکمیل شده</span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.RemainingCapacity)
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.Code }) |
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</p>

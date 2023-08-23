@@ -1,0 +1,145 @@
+﻿@model ExamWatchers.ViewModels.CreateExamViewModel
+
+@{
+    ViewBag.Title = "امتحان جدید";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@latest/dist/css/persian-datepicker.min.css" />
+}
+
+<h2>امتحان جدید</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamStartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ExamStartTime, new { htmlAttributes = new { @class = "form-control", @style = "direction:ltr;" } })
+                @Html.ValidationMessageFor(model => model.ExamStartTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamEndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ExamEndTime, new { htmlAttributes = new { @class = "form-control", @style = "direction:ltr;" } })
+                @Html.ValidationMessageFor(model => model.ExamEndTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WatchersCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WatchersCapacity, new { htmlAttributes = new { @class = "form-control", @style = "direction:ltr;" } })
+                @Html.ValidationMessageFor(model => model.WatchersCapacity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CollegeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.CollegeId, (SelectList)ViewBag.CollegeId, new { @class = "form-control", @onchange = "FillPlaces()" })*@
+                @Html.DropDownList("CollegeId", null, new { @class = "form-control", @onchange = "FillPlaces()" })
+                @Html.ValidationMessageFor(model => model.CollegeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExamPlaceId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(model => model.ExamPlaceId, (SelectList)ViewBag.ExamPlaceId, new { @class = "form-control" })*@
+                @Html.DropDownList("ExamPlaceId", null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExamPlaceId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-default col-md-12" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://unpkg.com/persian-date@latest/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@latest/dist/js/persian-datepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#ExamStartTime').persianDatepicker({
+                initialValueType: 'persian',
+                format: 'YYYY/MM/DD HH:mm',
+                timePicker: {
+                    enabled: true,
+                    meridiem: {
+                        enabled: true
+                    }
+                }
+            });
+
+            $('#ExamEndTime').persianDatepicker({
+                initialValueType: 'persian',
+                onlyTimePicker: true,
+                format: 'HH:mm',
+                timePicker: {
+                    enabled: true,
+                    meridiem: {
+                        enabled: true
+                    }
+                }
+            });
+
+            FillPlaces();
+        })
+
+        function FillPlaces() {
+            var collegeId = $('#CollegeId').val();
+            $.ajax({
+                url: '/Exams/FillPlaces',
+                type: "GET",
+                dataType: "JSON",
+                data: { collegeId: collegeId },
+                success: function (places) {
+                    $("#ExamPlaceId").html(""); // حذف همه آیتم ها قبل از اضافه کردن آیتم جدید
+                    $.each(places, function (i, place) {
+                        $("#ExamPlaceId").append(
+                            $('<option></option>').val(place.Id).html(place.Title));
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
+    </script>
+}

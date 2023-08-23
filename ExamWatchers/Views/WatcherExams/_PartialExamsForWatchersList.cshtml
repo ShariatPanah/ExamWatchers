@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ExamWatchers.ViewModels.ExamForWatcherViewModel>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamPlace.Title)
+        </td>
+        <td class="numeric">
+            @(item.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + item.ExamEndTime.ToString("HH:mm"))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WatchersCapacity)
+        </td>
+        <td class="@(item.RemainingCapacity == 0?"text-danger":null)">
+            @if (item.RemainingCapacity == 0)
+            {
+                <span>تکمیل شده</span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.RemainingCapacity)
+            }
+        </td>
+        <td>
+            @if (item.ShowActions)
+            {
+                <a href="#" class="js-toggle-presence @(item.ActionText == "عدم حضور" ? "text-danger":null)" data-eId="@item.Code">
+                    @item.ActionText
+                </a>
+            }
+        </td>
+    </tr>
+}

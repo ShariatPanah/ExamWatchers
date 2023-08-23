@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Models.Exam>
+
+@{
+    ViewBag.Title = "Exams";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>امتحانات @ViewBag.CollegeTitle</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                حوزه
+            </th>
+            <th>
+                تاریخ امتحان
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WatchersCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingCapacity)
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExamPlace.Title)
+                </td>
+                <td class="numeric">
+                    @(item.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + item.ExamEndTime.ToString("HH:mm"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatchersCapacity)
+                </td>
+                <td>
+                    @if (item.RemainingCapacity == 0)
+                    {
+                        <span class="text-danger">تکمیل شده</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.RemainingCapacity)
+                    }
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Code }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Code }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Code })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").DataTable({
+                language: {
+                    search: "جستجو:",
+                    emptyTable: "<span style='color:red;'>داده ای برای نمایش وجود ندارد!</span>",
+                    processing: "درحال واکشی اطلاعات...",
+                    loadingRecords: "درحال واکشی اطلاعات...",
+                    zeroRecords: "موردی یافت نشد!",
+                    lengthMenu: "نمایش &nbsp;_MENU_&nbsp; رکورد",
+                    info: "نمایش رکوردهای _START_ الی _END_ از مجموع _TOTAL_ رکورد",
+                    infoEmpty: "نمایش رکوردهای 0 الی 0 از مجموع 0 رکورد",
+                    infoFiltered: "",
+                    paginate: {
+                        next: "بعدی",
+                        previous: "قبلی"
+                    }
+                }
+            });
+        });
+    </script>
+}

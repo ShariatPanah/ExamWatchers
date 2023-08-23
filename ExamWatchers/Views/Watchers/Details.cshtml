@@ -1,0 +1,50 @@
+﻿@model Models.Watcher
+
+@{
+    ViewBag.Title = "جزئیات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>جزئیات</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.PersonnelCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.PersonnelCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @(Model.User.FirstName + " " + Model.User.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Organ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Organ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WatchHours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WatchHours)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.PersonnelCode }) |
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</p>

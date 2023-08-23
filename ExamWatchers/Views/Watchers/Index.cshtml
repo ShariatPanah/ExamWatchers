@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Models.Watcher>
+
+@{
+    ViewBag.Title = "لیست مراقبین";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>مراقبین</h2>
+
+<p>
+    @Html.ActionLink("مراقب جدید", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("تهیه گزارش", "PrintWatchersForm", null, new { @class = "btn btn-success" })
+</p>
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.PersonnelCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Organ)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WatchHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TakenHours)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.PersonnelCode)
+                </td>
+                <td>
+                    @(item.User.FirstName + " " + item.User.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Organ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatchHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TakenHours)
+                </td>
+                <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.PersonnelCode }) |
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.PersonnelCode }) |
+                    @Html.ActionLink("حذف", "Delete", new { id = item.PersonnelCode }) |
+                    @Html.ActionLink("امتحانات اخذ شده", "TakenExams", new { id = item.PersonnelCode })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").DataTable({
+                language: {
+                    search: "جستجو:",
+                    emptyTable: "<span style='color:red;'>داده ای برای نمایش وجود ندارد!</span>",
+                    processing: "درحال واکشی اطلاعات...",
+                    loadingRecords: "درحال واکشی اطلاعات...",
+                    zeroRecords: "موردی یافت نشد!",
+                    lengthMenu: "نمایش &nbsp;_MENU_&nbsp; رکورد",
+                    info: "نمایش رکوردهای _START_ الی _END_ از مجموع _TOTAL_ رکورد",
+                    infoEmpty: "نمایش رکوردهای 0 الی 0 از مجموع 0 رکورد",
+                    infoFiltered: "",
+                    paginate: {
+                        next: "بعدی",
+                        previous: "قبلی"
+                    }
+                }
+            });
+        });
+    </script>
+}

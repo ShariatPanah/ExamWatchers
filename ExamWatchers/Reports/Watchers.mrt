@@ -1,0 +1,482 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <Watchers Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>Watchers</Alias>
+        <ConnectionStringEncrypted>9FbDiU5b84VhfKH0TUyk54vIlYhNb3vI7Ajt3E0A6+fEcNlJTkxzrWFE0exjGDJj3GzbiMVZ46ThE+3cd0klPw==</ConnectionStringEncrypted>
+        <Name>Watchers</Name>
+      </Watchers>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <Watchers Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>Watchers</Alias>
+        <Columns isList="true" count="5">
+          <value>PersonnelCode,System.String</value>
+          <value>WatcherName,System.String</value>
+          <value>Organ,System.Byte</value>
+          <value>WatchHours,System.Byte</value>
+          <value>TakenHours,System.Int32</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <IsCloud>False</IsCloud>
+        <Name>Watchers</Name>
+        <NameInSource>Watchers</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>SELECT Watchers.PersonnelCode, CONCAT(FirstName, ' ', LastName) WatcherName, Organ, WatchHours, ISNULL(SUM(DATEDIFF(hour, Exams.ExamStartTime, Exams.ExamEndTime)), 0) TakenHours from Watchers
+left join Users on Watchers.PersonnelCode = users.PersonnelCode
+left join WatcherExams on Watchers.PersonnelCode = WatcherExams.WatcherCode
+left join Exams on WatcherExams.ExamCode = Exams.Code
+group by Watchers.PersonnelCode, Users.FirstName, Users.LastName, Users.Organ, Watchers.WatchHours 
+order by Organ desc</SqlCommand>
+      </Watchers>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Variables isList="true" count="1">
+      <value>,ReportDateTime,ReportDateTime,System.String,,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="5">
+        <PageFooterBand1 Ref="5" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,27.1,19,0.6</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text16 Ref="6" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,3,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>صفحه {PageNumber} از {TotalPageCount}</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <Type>Expression</Type>
+            </Text16>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand1>
+        <ReportTitleBand1 Ref="7" type="ReportTitleBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,2.1</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text6 Ref="8" type="Text" isKey="true">
+              <Brush>White</Brush>
+              <ClientRectangle>0,1.34,3.3,0.51</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10</Font>
+              <Guid>dcbaa2df2af941a1858ceb6f1ac7e5aa</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>{ReportDateTime}</Text>
+              <TextBrush>DimGray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text11 Ref="9" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.56,1.34,2.54,0.51</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <Guid>eece0bf945e4492480bc898dcbc86bc2</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>زمان چاپ گزارش:</Text>
+              <TextBrush>DimGray</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <txtTitle Ref="10" type="Text" isKey="true">
+              <Brush>White</Brush>
+              <ClientRectangle>6.57,0.25,6,0.76</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,14</Font>
+              <Guid>39f593bfbeaf4173b027e007455ab6a4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>txtTitle</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>سیستم مدیریت مراقبین</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </txtTitle>
+            <Text1 Ref="11" type="Text" isKey="true">
+              <Brush>White</Brush>
+              <ClientRectangle>6.57,1.07,6,0.76</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,14</Font>
+              <Guid>2055d9050f3e4559bcef6e62d2723dc6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="7" />
+              <Text>لیست مراقبین</Text>
+              <TextBrush>[89:89:89]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>ReportTitleBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportTitleBand1>
+        <HeaderWatchers Ref="12" type="HeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.3,19,0.8</ClientRectangle>
+          <Components isList="true" count="5">
+            <HeaderWatchers_TakenHours Ref="13" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[127:127:127]</Brush>
+              <ClientRectangle>0,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderWatchers_TakenHours</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>مجموع ساعات اخذ شده</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderWatchers_TakenHours>
+            <HeaderWatchers_WatchHours Ref="14" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[127:127:127]</Brush>
+              <ClientRectangle>3.8,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderWatchers_WatchHours</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>ساعات مراقبت</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderWatchers_WatchHours>
+            <HeaderWatchers_Organ Ref="15" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[127:127:127]</Brush>
+              <ClientRectangle>7.6,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderWatchers_Organ</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>بخش سازمانی</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderWatchers_Organ>
+            <HeaderWatchers_WatcherName Ref="16" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[127:127:127]</Brush>
+              <ClientRectangle>11.4,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderWatchers_WatcherName</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>نام مراقب</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderWatchers_WatcherName>
+            <HeaderWatchers_PersonnelCode Ref="17" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>[127:127:127]</Brush>
+              <ClientRectangle>15.2,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,10,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>HeaderWatchers_PersonnelCode</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>کد پرسنلی</Text>
+              <TextBrush>White</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </HeaderWatchers_PersonnelCode>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>HeaderWatchers</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </HeaderWatchers>
+        <DataWatchers Ref="18" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,4.9,19,0.8</ClientRectangle>
+          <Components isList="true" count="5">
+            <DataWatchers_TakenHours Ref="19" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataWatchers_TakenHours</Name>
+              <Page isRef="4" />
+              <Parent isRef="18" />
+              <Text>{Watchers.TakenHours == 0 ? "0": Watchers.TakenHours + " ساعت"}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </DataWatchers_TakenHours>
+            <DataWatchers_WatchHours Ref="20" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>3.8,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataWatchers_WatchHours</Name>
+              <Page isRef="4" />
+              <Parent isRef="18" />
+              <Text>{Watchers.WatchHours == 0 ? "0" : Watchers.WatchHours + " ساعت"}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </DataWatchers_WatchHours>
+            <DataWatchers_Organ Ref="21" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>7.6,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataWatchers_Organ</Name>
+              <Page isRef="4" />
+              <Parent isRef="18" />
+              <Text>{GetOrganName(Watchers.Organ)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </DataWatchers_Organ>
+            <DataWatchers_WatcherName Ref="22" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>11.4,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataWatchers_WatcherName</Name>
+              <Page isRef="4" />
+              <Parent isRef="18" />
+              <Text>{Watchers.WatcherName}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataWatchers_WatcherName>
+            <DataWatchers_PersonnelCode Ref="23" type="Text" isKey="true">
+              <Border>All;Black;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>15.2,0,3.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>DataWatchers_PersonnelCode</Name>
+              <Page isRef="4" />
+              <Parent isRef="18" />
+              <Text>{Watchers.PersonnelCode}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <VertAlignment>Center</VertAlignment>
+            </DataWatchers_PersonnelCode>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName>Watchers</DataSourceName>
+          <Filters isList="true" count="0" />
+          <Name>DataWatchers</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataWatchers>
+        <ReportSummaryBand1 Ref="24" type="ReportSummaryBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,6.5,19,1.47</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text44 Ref="25" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.11,0.63,4.06,0.76</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Aland,12,Bold</Font>
+              <Guid>cedce9b747e74e04a14fbbacca669296</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text44</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>اتمام گزارش</Text>
+              <TextBrush>[38:38:38]</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=True, Trimming=None, WordWrap=False, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
+              <Type>Expression</Type>
+            </Text44>
+            <HorizontalLinePrimitive24 Ref="26" type="HorizontalLinePrimitive" isKey="true">
+              <ClientRectangle>0,0.51,19.09,0.0254</ClientRectangle>
+              <Color>Black</Color>
+              <EndCap Ref="27" type="Cap" isKey="true">
+                <Color>Black</Color>
+              </EndCap>
+              <Guid>c63ab22ed8e5423ba41bcb4f0ee2c092</Guid>
+              <Name>HorizontalLinePrimitive24</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Size>3</Size>
+              <StartCap Ref="28" type="Cap" isKey="true">
+                <Color>Black</Color>
+              </StartCap>
+            </HorizontalLinePrimitive24>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Guid>ee60c9b0597a470d9eaf1e3d39d52964</Guid>
+          <Name>ReportSummaryBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportSummaryBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>74dd00d59dc5432f82ed8bf60aa20366</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <PaperSize>A4</PaperSize>
+      <Report isRef="0" />
+      <Watermark Ref="29" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Aland,99.74998,Regular,Point,False,0</Font>
+        <RightToLeft>True</RightToLeft>
+        <ShowBehind>True</ShowBehind>
+        <Text>مراقبین</Text>
+        <TextBrush>[252:230:212]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="30" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>RptCustomers</ReportAlias>
+  <ReportChanged>8/27/2019 2:02:55 PM</ReportChanged>
+  <ReportCreated>3/21/2018 11:27:59 PM</ReportCreated>
+  <ReportFile>C:\Users\ersir\Documents\Visual Studio 2019\Projects\ExamWatchers\ExamWatchers\Reports\Watchers.mrt</ReportFile>
+  <ReportGuid>86eb26d623f347c1ac87cf75e07a2125</ReportGuid>
+  <ReportName>RptCustomers</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2014.2.2004</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+using System.Globalization;
+
+namespace Reports
+{
+    public class RptCustomers : Stimulsoft.Report.StiReport
+    {
+        public RptCustomers()        
+		{
+            this.InitializeComponent();
+        }
+		
+		public string GetOrganName(byte organ)
+		{
+			switch(organ)
+			{
+				case 1:
+					return "معاونت";
+				
+				case 2:
+					return "پژوهشی";
+				
+				case 3:
+					return "مالی";
+				
+				case 4:
+					return "آموزش";
+				
+				default:
+					return "معاونت";
+			}
+		}
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="1">
+    <Style1 Ref="31" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>Gainsboro</Brush>
+      <Conditions isList="true" count="0" />
+      <Description />
+      <Font>Arial,8</Font>
+      <Name>Style1</Name>
+      <TextBrush>Black</TextBrush>
+    </Style1>
+  </Styles>
+</StiSerializer>

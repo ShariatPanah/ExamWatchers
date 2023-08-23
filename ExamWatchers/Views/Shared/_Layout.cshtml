@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - سیستم مدیریت مراقبین</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
+
+    @{
+        var db = new Models.ApplicationDbContext();
+        var user = db.Users.FirstOrDefault(u => u.PersonnelCode == User.Identity.Name);
+    }
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("سیستم مدیریت مراقبین", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @{
+                        if (User.IsInRole(Models.SecurityRoles.Admin))
+                        {
+                            <li>@Html.ActionLink("دانشکده ها", "Index", "Colleges")</li>
+                            <li>@Html.ActionLink("حوزه های امتحانی", "Index", "ExamPlaces")</li>
+                            <li>@Html.ActionLink("امتحانات", "Index", "Exams")</li>
+                            <li>@Html.ActionLink("کاربران", "Index", "Users")</li>
+                            <li>@Html.ActionLink("مراقبین", "Index", "Watchers")</li>
+                            <li>@Html.ActionLink("حضور مراقبین", "Index", "WatcherExams")</li>
+                        }
+                        else if (User.IsInRole(Models.SecurityRoles.CollegeAdmin))
+                        {
+                            <li>@Html.ActionLink("حوزه های امتحانی", "Index", "ExamPlaces")</li>
+                            <li>@Html.ActionLink("امتحانات", "Index", "Exams")</li>
+                            <li>@Html.ActionLink("مراقبین", "Index", "Watchers")</li>
+                            <li>@Html.ActionLink("حضور مراقبین", "Index", "WatcherExams")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("امتحانات", "Exams", "WatcherExams")</li>
+                        }
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user-circle-o" style="font-size:16px; margin-left:5px;vertical-align: middle;"></i> <span>@(user.FirstName + " " + user.LastName)</span> <i class="icon-submenu fa fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            @*<li><a href="~/Manage/"><i class="fa fa-cogs"></i> <span>تنظیمات</span></a></li>*@
+                            <li>
+                                @using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                                        <i class="lnr lnr-exit" style="vertical-align: middle;"></i> <span>خروج</span>
+                                    </a>
+                                }
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="copyright">&copy; @DateTime.Now.Year - سیستم مدیریت مراقبین</p>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/unobtrusive")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

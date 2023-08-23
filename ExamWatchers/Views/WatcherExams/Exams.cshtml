@@ -1,0 +1,165 @@
+﻿@model IEnumerable<ExamWatchers.ViewModels.ExamForWatcherViewModel>
+
+@{
+    ViewBag.Title = "امتحانات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var ajaxOptions = new AjaxOptions()
+    {
+        UpdateTargetId = "resultTable",
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+    };
+}
+
+<h2>امتحانات</h2>
+
+@using (Ajax.BeginForm("GetExams", ajaxOptions))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="margin-bottom:25px;">
+        <div class="form-group">
+            @Html.Label("CollegeId", "دانشکده", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-4">
+                @Html.DropDownList("CollegeId", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+
+            <div class="col-lg-2 col-md-3">
+                <button type="submit" class="btn btn-primary" onclick="AutoFarsiNum('#StatusDate');">
+                    <span class="fa fa-table" aria-hidden="true"></span>
+                    نمایش
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                حوزه امتحانی
+            </th>
+            <th>
+                تاریخ امتحان
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WatchersCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemainingCapacity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody id="resultTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExamPlace.Title)
+                </td>
+                <td class="numeric">
+                    @(item.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + item.ExamEndTime.ToString("HH:mm"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatchersCapacity)
+                </td>
+                <td class="@(item.RemainingCapacity == 0?"text-danger":null)">
+                    @if (item.RemainingCapacity == 0)
+                    {
+                        <span>تکمیل شده</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.RemainingCapacity)
+                    }
+                </td>
+                <td>
+                    @if (item.ShowActions)
+                    {
+                        <a href="#" class="js-toggle-presence @(item.ActionText == "عدم حضور" ? "text-danger":null)" data-eId="@item.Code">
+                            @item.ActionText
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").DataTable({
+                language: {
+                    search: "جستجو:",
+                    emptyTable: "<span style='color:red;'>داده ای برای نمایش وجود ندارد!</span>",
+                    processing: "درحال واکشی اطلاعات...",
+                    loadingRecords: "درحال واکشی اطلاعات...",
+                    zeroRecords: "موردی یافت نشد!",
+                    lengthMenu: "نمایش &nbsp;_MENU_&nbsp; رکورد",
+                    info: "نمایش رکوردهای _START_ الی _END_ از مجموع _TOTAL_ رکورد",
+                    infoEmpty: "نمایش رکوردهای 0 الی 0 از مجموع 0 رکورد",
+                    infoFiltered: "",
+                    paginate: {
+                        next: "بعدی",
+                        previous: "قبلی"
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", ".js-toggle-presence", function (e) {
+            var btnToggle = $(e.target);
+            var eId = btnToggle.attr("data-eId").toString();
+
+            $.ajax({
+                url: "/Api/WatcherPresence/TogglePresence",
+                type: "GET",
+                data: { examCode: eId },
+                contentType: "application/json",
+                success: function (response) {
+
+                    var remCapTd = btnToggle.parents("tr").children('td').eq(5);
+                    if (response.IsOutOfCapacity)
+                        remCapTd.addClass("text-danger").text(response.RemainingCapacityText);
+                    else
+                        remCapTd.removeClass("text-danger").text(response.RemainingCapacityText);
+
+                    if (response.ShowAction) {
+                        btnToggle.text(response.ActionText);
+
+                        if (response.ActionText == "عدم حضور")
+                            btnToggle.addClass("text-danger");
+                        else
+                            btnToggle.removeClass("text-danger");
+                    }
+                    else {
+                        btnToggle.text('');
+                    }
+                },
+                error: function (error) {
+                    alert("خطایی رخ داده است.\n" + error.responseJSON.Message);
+                }
+            });
+        });
+    </script>
+}

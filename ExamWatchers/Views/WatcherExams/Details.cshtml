@@ -1,0 +1,66 @@
+﻿@model Models.WatcherExam
+
+@{
+    ViewBag.Title = "جزئیات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>جزئیات</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Exam.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exam.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.Title)
+        </dd>
+
+        <dt>
+            نام مراقب
+        </dt>
+
+        <dd>
+            @(Model.Watcher.User.FirstName + " " + Model.Watcher.User.LastName)
+        </dd>
+
+        <dt>
+            تاریخ امتحان
+        </dt>
+
+        <dd class="numeric">
+            @(Model.Exam.ExamStartTime.ToString("yyyy/MM/dd HH:mm") + " - " + Model.Exam.ExamEndTime.ToString("HH:mm"))
+        </dd>
+
+        <dt>
+            دانشکده
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.ExamPlace.College.Title)
+        </dd>
+
+        <dt>
+            حوزه امتحانی
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exam.ExamPlace.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("بازگشت به لیست", "Index")
+</p>

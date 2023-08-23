@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamWatchers", "ExamWatchers\ExamWatchers.csproj", "{F055C653-226C-45BC-B6ED-1356404CC45A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{2A54DC7C-6FB6-407C-ABA3-B8E0250D6DCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F055C653-226C-45BC-B6ED-1356404CC45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F055C653-226C-45BC-B6ED-1356404CC45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F055C653-226C-45BC-B6ED-1356404CC45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F055C653-226C-45BC-B6ED-1356404CC45A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A54DC7C-6FB6-407C-ABA3-B8E0250D6DCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A54DC7C-6FB6-407C-ABA3-B8E0250D6DCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A54DC7C-6FB6-407C-ABA3-B8E0250D6DCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A54DC7C-6FB6-407C-ABA3-B8E0250D6DCC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4095DD1-FBFC-43E3-9215-1A154948A2B4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,91 @@
+﻿@model Models.User
+
+@{
+    ViewBag.Title = "حذف کاربر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>حذف کاربر</h2>
+
+<h3>آیا از حذف این کاربر اطمینان دارید؟</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonnelCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonnelCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Organ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Organ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegisterDate)
+        </dt>
+
+        <dd class="numeric">
+            @Html.DisplayFor(model => model.RegisterDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </dt>
+
+        <dd>
+            @{
+                if (Model.IsConfirmed)
+                {
+                    <span>بله</span>
+                }
+                else
+                {
+                    <span class="text-danger">خیر</span><br />
+                    @*@Html.ActionLink("تایید اکانت", "ConfirmUser", new { code = Model.PersonnelCode })*@
+                }
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="حذف" class="btn btn-default" /> |
+            @Html.ActionLink("بازگشت به لیست", "Index")
+        </div>
+    }
+</div>

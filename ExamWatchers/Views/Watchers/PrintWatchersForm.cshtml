@@ -1,0 +1,15 @@
+﻿@using Stimulsoft.Report.Mvc;
+@{
+    ViewBag.Title = "چاپ گزارش";
+    Layout = null;
+}
+
+@Html.Stimulsoft().StiMvcViewer("MvcViewerReport", new StiMvcViewerOptions()
+{
+    Theme = Stimulsoft.Report.Web.StiViewerTheme.Office2013WhiteViolet,
+    Actions = new StiMvcViewerOptions.ActionOptions
+    {
+        GetReport = "WatchersReport",
+        ViewerEvent = "ViewerEvent"
+    }
+})

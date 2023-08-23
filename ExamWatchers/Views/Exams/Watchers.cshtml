@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ExamWatchers.ViewModels.ExamWatcherDetailsViewModel>
+
+@{
+    ViewBag.Title = "مراقبین";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>مراقبین امتحان @ViewBag.ExamTitle</h2>
+
+    <p>
+        @Html.ActionLink("تهیه گزارش", "PrintWatchersForm", new { examCode = ViewBag.ExamCode }, new { @class = "btn btn-success" })
+    </p>
+</div>
+
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                کد پرسنلی
+            </th>
+            <th>
+                نام مراقب
+            </th>
+            <th>
+                تاریخ ثبت
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatcherCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WatcherName)
+                </td>
+                <td class="numeric">
+                    @(item.SubmitDate.ToString("yyyy/MM/dd HH:mm"))
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#table").DataTable({
+                language: {
+                    search: "جستجو:",
+                    emptyTable: "<span style='color:red;'>داده ای برای نمایش وجود ندارد!</span>",
+                    processing: "درحال واکشی اطلاعات...",
+                    loadingRecords: "درحال واکشی اطلاعات...",
+                    zeroRecords: "موردی یافت نشد!",
+                    lengthMenu: "نمایش &nbsp;_MENU_&nbsp; رکورد",
+                    info: "نمایش رکوردهای _START_ الی _END_ از مجموع _TOTAL_ رکورد",
+                    infoEmpty: "نمایش رکوردهای 0 الی 0 از مجموع 0 رکورد",
+                    infoFiltered: "",
+                    paginate: {
+                        next: "بعدی",
+                        previous: "قبلی"
+                    }
+                }
+            });
+        });
+    </script>
+}
